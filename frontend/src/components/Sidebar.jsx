@@ -1,33 +1,34 @@
-import React, { useState } from 'react';
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import { AppRoutes } from "./AppRoutes";
 
-
-
-export function AppSidebar() {
-    const [isCollapsed, setIsCollapsed] = useState(false);
-
+export function AppSidebar({ isCollapsed }) {
+  const location = useLocation();
 
   return (
-   {/* Sidebar */}
-   <div
-   className={`fixed top-0 left-0 h-full w-60 bg-gray-800 transition-transform duration-500 transform z-40 ${
-     isCollapsed ? "-translate-x-full" : "translate-x-0"
-   }`}>
-
-   <div className="p-4">
-     <div className="text-2xl text-white mb-4">Sidebar ko</div>
-     <nav className="flex flex-col space-y-2 text-white">
-       <Link to="/" className="hover:underline">Home</Link>
-       <Link to="/about" className="hover:underline">About</Link>
-     </nav>
-   </div>
- </div>
-
- {/* Main content */}
- <div className={`transition-all duration-500 flex-1 p-2 ${isCollapsed ? "ml-0" : "ml-64"}`}>
-   <button onClick={() => setIsCollapsed(!isCollapsed)}
-     className="p-2 bg-gray-500 text-white rounded mb-4">
-     Pindutin ito
-   </button>
- </div>
- )
+    <div
+      className={`fixed h-full w-64 bg-gray-800 shadow transition-transform duration-300 transform z-40 ${
+        isCollapsed ? "-translate-x-full" : "translate-x-0"
+      }`}
+    >
+      <div className="p-4">
+        <nav className="flex flex-col space-y-2 text-white">
+          {AppRoutes.filter((route) => route.showInSidebar).map(
+            ({ path, label, icon: Icon }) => (
+              <Link
+                key={path}
+                to={path}
+                className={`flex items-center px-3 py-2 rounded hover:bg-gray-700 transition ${
+                  location.pathname.startsWith(path) ? "bg-gray-700" : ""
+                }`}
+              >
+                {Icon && <Icon className="h-5 w-5 mr-2" />}
+                {label}
+              </Link>
+            )
+          )}
+        </nav>
+      </div>
+    </div>
+  );
 }

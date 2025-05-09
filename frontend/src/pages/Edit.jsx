@@ -5,7 +5,6 @@ import axios from "axios";
 export function Edit() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -13,7 +12,6 @@ export function Edit() {
   });
 
   useEffect(() => {
-    setIsLoading(true);
     axios.get(`http://localhost:3001/read/` + id) // Update URL here
       .then((res) => {
         console.log("Fetched data:", res.data);
@@ -22,25 +20,11 @@ export function Edit() {
           email: res.data.email || "",
           address: res.data.address || "",
         });
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1000);
       })
       .catch((err) => {
         console.log(err);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1000);
       });
   }, [id]);
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="text-lg text-gray-700">Loading...</div>
-      </div>
-    );
-  }
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -56,8 +40,8 @@ export function Edit() {
   };
 
   return (
-    <div className="w-md bg-gray-50">
-      <div className="w-full max-w-md bg-white border border-gray-200 rounded-lg shadow-lg p-8">
+    <div className="">
+      <div className="w-full max-w-md bg-white rounded shadow-sm p-8">
         <h2 className="text-2xl text-center text-gray-800 mb-6">
           Update Personnel
         </h2>

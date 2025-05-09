@@ -1,27 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Trash2, Eye, SquarePen } from "lucide-react";
 import axios from "axios";
 
 export function Home() {
   const [data, setData] = React.useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
     axios
       .get("http://localhost:3001/")
       .then((res) => {
         setData(res.data);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1000); // 2000ms = 2 seconds
       })
       .catch((err) => {
         console.log(err);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1000);
       });
   }, []);
 
@@ -34,14 +26,6 @@ export function Home() {
       .catch((err) => console.log(err));
   };
 
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="text-lg text-gray-700">Loading...</div>
-      </div>
-    );
-  }
-
   return (
     <div className="w-5xl">
       <Link to="/create">
@@ -49,10 +33,8 @@ export function Home() {
           + Add Personnel
         </button>
       </Link>
-   
 
       <div className="overflow-x-auto rounded-md shadow-lg border border-gray-100 bg-white p-6">
-        {/* <h2 className="text-2xl">Personnel List</h2> */}
         <table className="w-full text-left">
           <thead>
             <tr className="text-gray-800 border-b border-gray-100 font-semibold">
@@ -62,7 +44,7 @@ export function Home() {
               <td className="p-4 text-end">Actions</td>
             </tr>
           </thead>
-          
+
           <tbody className="text-gray-700">
             {data.map((personnel, index) => (
               <tr

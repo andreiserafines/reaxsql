@@ -23,8 +23,8 @@ export function Create() {
   };
 
   return (
-    <div className="w-md bg-gray-50">
-      <div className="w-full max-w-md bg-white border border-gray-200 rounded-lg shadow-lg p-8">
+    <div className="">
+      <div className="w-full max-w-md bg-white rounded-sm shadow-sm p-8">
         <h2 className="text-2xl text-center text-gray-800 mb-6">
           Add Personnel
         </h2>
