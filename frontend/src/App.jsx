@@ -1,21 +1,13 @@
-import React, { useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { AppSidebar } from './components/Sidebar';
-import { MainContent } from './components/MainContent';
+import React from "react"
+import { ToggleTheme } from "./components/Themes"
+import { ThemedContainer } from "./components/ThemedContainer"
+
 
 export default function App() {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-
   return (
-    <div className=''>
-      <BrowserRouter>
-        <div className='flex min-h-screen'>
-          <AppSidebar isCollapsed={isCollapsed} />
-          <MainContent isCollapsed={isCollapsed}
-            setIsCollapsed={setIsCollapsed}
-          />
-        </div>
-      </BrowserRouter>
+    <div className="flex justify-center items-center h-screen gap-5">
+      <ToggleTheme />
+      <ThemedContainer />
     </div>
-  );
+  )
 }

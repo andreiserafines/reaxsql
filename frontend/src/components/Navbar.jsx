@@ -3,15 +3,17 @@ import { Menu } from "lucide-react";
 
 export function Navbar({ isCollapsed, setIsCollapsed }) {
   return (
-    <div className="py-3 flex items-center bg-white shadow">
+    <div className="py-4 flex items-center bg-white shadow">
       <div className="mx-4">
         {/* Toggle Button */}
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="p-1 text-neutral-700 rounded shadow-sm hover:bg-gray-100 duration-300 cursor-pointer"
+          className="p-2 text-gray-600 cursor-pointer border border-gray-300 rounded"
         >
-          <Menu size={24} />
+          <Menu size={20} strokeWidth={1} />
         </button>
+        
+        
       </div>
     </div>
   );

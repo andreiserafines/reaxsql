@@ -5,7 +5,7 @@ import { Navbar } from "./Navbar";
 
 export function MainContent({ isCollapsed, setIsCollapsed }) {
     return (
-        <div className={`bg-gray-200 fixed h-full w-full transition-transform duration-300 transform ${isCollapsed ? "" : "translate-x-64"}`}>
+        <div className={`bg-gray-200 fixed h-full w-full transition-transform duration-300 transform ${isCollapsed ? "" : "translate-x-70"}`}>
             <Navbar isCollapsed={isCollapsed}
                 setIsCollapsed={setIsCollapsed} />
 

@@ -7,7 +7,7 @@ export function AppSidebar({ isCollapsed }) {
 
   return (
     <div
-      className={`fixed h-full w-64 bg-gray-800 shadow transition-transform duration-300 transform z-40 ${
+      className={`fixed h-full w-70 bg-black border-r border-gray-300 transition-transform duration-300 transform z-40 ${
         isCollapsed ? "-translate-x-full" : "translate-x-0"
       }`}
     >
