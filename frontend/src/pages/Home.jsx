@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Trash2, Eye, SquarePen } from "lucide-react";
+import { List, Trash2, Eye, SquarePen } from "lucide-react";
 import axios from "axios";
 
 export function Home() {
@@ -27,53 +27,73 @@ export function Home() {
   };
 
   return (
-    <div className="w-5xl">
-      <Link to="/create">
-        <button className="mb-5 bg-blue-600 hover:bg-blue-700 rounded-md text-white py-2 px-4 transition">
-          + Add Personnel
-        </button>
-      </Link>
+    <div className="overflow-x-auto sm:overflow-visible max-w-6xl w-full mx-auto rounded-md border border-gray-200 bg-white p-4 dark:bg-slate-800 dark:border-slate-700">
+      <div className="flex items-center justify-between mb-4 w-full">
+        <h2 className="text-base font-semibold text-slate-600 px-1 dark:text-white flex items-center gap-2">
+        <List size={24} />
+          Personnel List
+        </h2>
 
-      <div className="overflow-x-auto rounded-md shadow-lg border border-gray-100 bg-white p-6">
-        <table className="w-full text-left">
-          <thead>
-            <tr className="text-gray-800 border-b border-gray-100 font-semibold">
-              <td className="p-4 ">Name</td>
-              <td className="p-4 ">Email</td>
-              <td className="p-4 ">Address</td>
-              <td className="p-4 text-end">Actions</td>
-            </tr>
-          </thead>
+        <Link to="/create">
+          <button className="cursor-pointer flex items-center bg-slate-700 hover:bg-slate-800 rounded-sm font-semibold text-xs text-white py-3 px-3 transition dark:hover:bg-slate-500  dark:bg-slate-600">
+            + Add Personnel
+          </button>
+        </Link>
+      </div>
 
-          <tbody className="text-gray-700">
-            {data.map((personnel, index) => (
-              <tr
-                key={index}
-                className="hover:bg-blue-50 transition border-b border-gray-200 text-gray-600"
-              >
-                <td className="p-4">{personnel.name}</td>
-                <td className="p-4">{personnel.email}</td>
-                <td className="p-4">{personnel.address}</td>
-                <td className="p-4 text-gray-600 flex justify-end gap-3 items-center">
+      <table className="min-w-full text-left">
+        <thead>
+          <tr className="text-slate-600 border-b border-slate-200 uppercase tracking-wide text-xs dark:border-slate-700 dark:text-white">
+            <th className="p-4">Name</th>
+            <th className="p-4">Email</th>
+            <th className="p-4">Address</th>
+            <th className="p-4 text-end">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody className="text-slate-700 divide-y divide-gray-200 dark:divide-slate-700 dark:text-white">
+          {data.map((personnel, index) => (
+            <tr
+              key={index}
+              className="hover:bg-gray-50 transition dark:hover:bg-gray-700"
+            >
+              <td className="p-4 flex items-center gap-3 mr-2">
+                <img
+                  src={`https://api.dicebear.com/7.x/initials/svg?seed=${personnel.name}`}
+                  alt={personnel.name}
+                  className="w-8 h-8 rounded-md"
+                />
+                <div className="font-medium">{personnel.name}<br />
+                  <span className="text-xs text-slate-500 dark:text-slate-400">{personnel.branch}</span></div>
+              </td>
+              <td className="p-4 mr-2">{personnel.email}</td>
+              <td className="p-4 mr-2">{personnel.address}</td>
+              <td className="p-4 mr-2 text-end">
+                <div className="flex justify-end gap-3 items-center text-slate-500 dark:text-slate-600">
                   <Link to={`/edit/${personnel.id}`}>
-                    <SquarePen className="hover:text-green-600" size={20} />
+                    <SquarePen
+                      className="hover:text-slate-800 dark:hover:text-slate-200 duration-300"
+                      size={18}
+                    />
                   </Link>
                   <Link to={`/read/${personnel.id}`}>
-                    <Eye className="hover:text-cyan-600" size={20} />
+                    <Eye
+                      className="hover:text-slate-800 dark:hover:text-slate-200 duration-300"
+                      size={18}
+                    />
                   </Link>
                   <button onClick={() => handleDelete(personnel.id)}>
                     <Trash2
-                      className="hover:text-red-600"
-                      size={18}
-                      strokeWidth={2}
+                      className="hover:text-slate-800 cursor-pointer dark:hover:text-slate-200 duration-300"
+                      size={17}
                     />
                   </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

@@ -4,18 +4,20 @@ import { AppRoutes } from "./AppRoutes";
 import { Navbar } from "./Navbar";
 
 export function MainContent({ isCollapsed, setIsCollapsed }) {
-    return (
-        <div className={`bg-gray-200 fixed h-full w-full transition-transform duration-300 transform ${isCollapsed ? "" : "translate-x-70"}`}>
-            <Navbar isCollapsed={isCollapsed}
-                setIsCollapsed={setIsCollapsed} />
-
-            <div className="p-4">
-                <Routes>
-                    {AppRoutes.map(({ path, element }) => (
-                        <Route key={path} path={path} element={element} />
-                    ))}
-                </Routes>
-            </div>
+  return (
+    <div
+      className={`flex flex-col w-full mx-auto transition-all duration-300 bg-slate-50 dark:bg-slate-900 min-h-screen`}
+    >
+      <Navbar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+      <div className="">
+        <div className="w-full max-w-6xl mx-auto sm:overflow-visible">
+          <Routes>
+            {AppRoutes.map(({ path, element }) => (
+              <Route key={path} path={path} element={element} />
+            ))}
+          </Routes>
         </div>
-    );
+      </div>
+    </div>
+  );
 }

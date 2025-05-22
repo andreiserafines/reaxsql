@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Collapsible Sidebar with Fixed Height</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Sidebar widths */
+    #sidebar.expanded {
+      width: 16rem; /* 256px */
+    }
+    #sidebar.collapsed {
+      width: 4rem; /* 64px */
+    }
+
+    /* Hide sidebar text when collapsed */
+    #sidebar.collapsed .sidebar-text {
+      display: none;
+    }
+
+    /* Full viewport height */
+    #sidebar {
+      height: 100vh;
+      /* Hide sidebar until JS runs to prevent flicker */
+      visibility: hidden;
+      transition: width 0.3s ease;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <nav id="sidebar"
+      class="fixed md:relative z-50 bg-gray-800 text-white flex flex-col overflow-hidden expanded transition-transform duration-300"
+      >
+      <div class="flex items-center justify-between p-4 border-b border-gray-700">
+        <span class="font-bold text-xl sidebar-text">My Sidebar</span>
+      </div>
+      <ul class="flex-1 flex flex-col space-y-2 p-4">
+        <li>
+          <a href="#" class="flex items-center space-x-3 p-2 rounded hover:bg-gray-700">
+            <span class="w-6 text-center">🏠</span>
+            <span class="sidebar-text">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="flex items-center space-x-3 p-2 rounded hover:bg-gray-700">
+            <span class="w-6 text-center">⚙️</span>
+            <span class="sidebar-text">Settings</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="flex items-center space-x-3 p-2 rounded hover:bg-gray-700">
+            <span class="w-6 text-center">👤</span>
+            <span class="sidebar-text">Profile</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Overlay for mobile -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden"></div>
+
+    <!-- Main content -->
+    <div class="flex-1 flex flex-col min-h-screen">
+      <!-- Header -->
+      <header class="flex items-center justify-between bg-white p-4 shadow">
+        <button id="toggleBtn" class="p-2 bg-gray-200 rounded hover:bg-gray-300" aria-label="Toggle sidebar">
+          ☰
+        </button>
+        <h1 class="text-xl font-semibold">Collapsible Sidebar Demo</h1>
+      </header>
+
+      <main class="p-6">
+        <p>Your main content goes here.</p>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const sidebar = document.getElementById('sidebar');
+      const toggleBtn = document.getElementById('toggleBtn');
+      const overlay = document.getElementById('overlay');
+
+      // State
+      let isCollapsed = false;  // desktop collapse state
+      let isMobileOpen = false; // mobile sidebar open/close state
+
+      // Detect mobile width (<768px)
+      function isMobile() {
+        return window.innerWidth < 768;
+      }
+
+      // Load states from localStorage
+      function loadState() {
+        isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+        isMobileOpen = localStorage.getItem('mobileSidebarOpen') === 'true';
+      }
+
+      // Save states to localStorage
+      function saveState() {
+        localStorage.setItem('sidebarCollapsed', isCollapsed);
+        localStorage.setItem('mobileSidebarOpen', isMobileOpen);
+      }
+
+      // Apply sidebar and overlay state
+      function applyState() {
+        if (isMobile()) {
+          // Mobile: sidebar slides in/out with overlay
+          if (isMobileOpen) {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+          } else {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+          }
+
+          // Sidebar always expanded width on mobile
+          sidebar.classList.remove('collapsed');
+          sidebar.classList.add('expanded');
+        } else {
+          // Desktop: sidebar visible, toggles collapsed/expanded
+          overlay.classList.add('hidden');
+          sidebar.classList.remove('-translate-x-full');
+
+          if (isCollapsed) {
+            sidebar.classList.add('collapsed');
+            sidebar.classList.remove('expanded');
+          } else {
+            sidebar.classList.remove('collapsed');
+            sidebar.classList.add('expanded');
+          }
+
+          // Always reset mobile sidebar open state on desktop
+          isMobileOpen = false;
+        }
+
+        saveState();
+      }
+
+      // Toggle button click handler
+      toggleBtn.addEventListener('click', () => {
+        if (isMobile()) {
+          // Toggle mobile sidebar open/close
+          isMobileOpen = !isMobileOpen;
+        } else {
+          // Toggle desktop collapsed/expanded
+          isCollapsed = !isCollapsed;
+        }
+        applyState();
+      });
+
+      // Clicking overlay closes mobile sidebar
+      overlay.addEventListener('click', () => {
+        isMobileOpen = false;
+        applyState();
+      });
+
+      // On window resize, reset states accordingly
+      window.addEventListener('resize', () => {
+        if (!isMobile()) {
+          isMobileOpen = false;  // close mobile sidebar when switching to desktop
+        }
+        applyState();
+      });
+
+      // Initialize
+      loadState();
+      applyState();
+
+      // Show sidebar after JS runs to prevent flicker
+      sidebar.style.visibility = 'visible';
+    })();
+  </script>
+
+</body>
+</html>

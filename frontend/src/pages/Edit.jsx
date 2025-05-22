@@ -12,7 +12,8 @@ export function Edit() {
   });
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/read/` + id) // Update URL here
+    axios
+      .get(`http://localhost:3001/read/` + id) // Update URL here
       .then((res) => {
         console.log("Fetched data:", res.data);
         setValues({
@@ -41,13 +42,13 @@ export function Edit() {
 
   return (
     <div className="">
-      <div className="w-full max-w-md bg-white rounded shadow-sm p-8">
-        <h2 className="text-2xl text-center text-gray-800 mb-6">
+      <div className="">
+        <h2 className="text-base font-semibold text-gray-800 mb-6">
           Update Personnel
         </h2>
         <form onSubmit={handleUpdate} className="flex flex-col gap-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">
+            <label className="block text-gray-700 mb-1">
               Full Name
             </label>
             <input
@@ -60,7 +61,7 @@ export function Edit() {
             />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">
+            <label className="block text-gray-700 mb-1">
               Email
             </label>
             <input
@@ -73,7 +74,7 @@ export function Edit() {
             />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">
+            <label className="block text-gray-700 mb-1">
               Address
             </label>
             <input

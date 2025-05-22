@@ -1,13 +1,24 @@
-import React from "react"
-import { ToggleTheme } from "./components/Themes"
-import { ThemedContainer } from "./components/ThemedContainer"
-
+import React, { useState } from 'react';
+import { ThemeProvider } from './context/ThemeContext';
+import { BrowserRouter } from 'react-router-dom';
+import { MainContent } from './components/MainContent';
 
 export default function App() {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
   return (
-    <div className="flex justify-center items-center h-screen gap-5">
-      <ToggleTheme />
-      <ThemedContainer />
-    </div>
-  )
+    <>
+      <ThemeProvider>
+        <div className='bg-slate-50 dark:bg-slate-900'>
+          <BrowserRouter>
+            <div className='text-[13.5px]'>
+              <MainContent isCollapsed={isCollapsed}
+                setIsCollapsed={setIsCollapsed}
+              />
+            </div>
+          </BrowserRouter>
+        </div>
+      </ThemeProvider>
+    </>
+  );
 }

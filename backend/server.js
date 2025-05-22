@@ -35,9 +35,10 @@ app.get('/', (req, res) => {
 
 // Post Data
 app.post('/create', (req, res) => {
-    const sql = "INSERT INTO personnel (`name`, `email`, `address`) VALUES (?)";
+    const sql = "INSERT INTO personnel (`name`, `email`, `address`, `branch`) VALUES (?)";
     const values = [
         req.body.name,
+        req.body.branch,
         req.body.email,
         req.body.address
     ]
@@ -59,7 +60,7 @@ app.get('/read/:id', (req, res) => {
 
 // Update Data
 app.put('/update/:id', (req, res) => {
-    const sql = "UPDATE personnel SET `name`=?, `email`=?, `address`=? WHERE id=?";
+    const sql = "UPDATE personnel SET `name`=?, `email`=?, `address`=?, `branch`=? WHERE id=?";
     const { name, email, address } = req.body;
     const id = req.params.id;
     dataB.query(sql, [name, email, address, id], (err, result) => {

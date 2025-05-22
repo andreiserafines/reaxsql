@@ -17,7 +17,7 @@ export function Read() {
   }, [id]);
 
   return (
-    <div className="w-md">
+    <div className="">
       <div className="w-full max-w-md bg-white border border-gray-200 rounded-lg shadow-lg p-8">
         <h2 className="text-center text-2xl">Personnel Details</h2>
 

@@ -1,0 +1,44 @@
+project-root/
+├── backend/
+│   ├── config/
+│   │   └── database.js         # DB connection config
+│   ├── controllers/
+│   │   └── userController.js   # Business logic
+│   ├── middleware/
+│   │   └── authMiddleware.js   # Auth, error handling, etc.
+│   ├── models/
+│   │   └── userModel.js        # Database schema/model
+│   ├── routes/
+│   │   └── userRoutes.js       # API route definitions
+│   ├── utils/
+│   │   └── helpers.js          # Utility functions
+│   ├── server.js               # Main backend entry point
+│   └── .env                    # Environment variables
+│
+├── frontend/
+│   ├── public/                 # Static files (index.html, favicon, etc.)
+│   ├── src/
+│   │   ├── api/
+│   │   │   └── userApi.js      # Axios/fetch wrappers
+│   │   ├── assets/             # Images, icons, etc.
+│   │   ├── components/
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   └── FormInput.jsx
+│   │   ├── layouts/
+│   │   │   └── MainLayout.jsx
+│   │   ├── pages/
+│   │   │   ├── Home.jsx
+│   │   │   ├── About.jsx
+│   │   │   └── Create.jsx
+│   │   ├── routes/
+│   │   │   └── AppRoutes.jsx   # React Router route definitions
+│   │   ├── styles/
+│   │   │   └── globals.css     # Optional global styles
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   └── tailwind.config.js      # Or other CSS framework config
+│
+├── .gitignore
+├── package.json                # Root-level for managing both
+├── README.md
