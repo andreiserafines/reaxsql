@@ -27,7 +27,7 @@ export function Home() {
   };
 
   return (
-    <div className="overflow-x-auto sm:overflow-visible max-w-6xl w-full mx-auto rounded-md border border-gray-200 bg-white p-4 dark:bg-slate-800 dark:border-slate-700">
+    <div className="overflow-x-auto shadow-lg sm:overflow-visible max-w-6xl w-full mx-auto rounded-md border border-gray-200 bg-white p-4 dark:bg-slate-800 dark:border-slate-700">
       <div className="flex items-center justify-between mb-4 w-full">
         <h2 className="text-base font-semibold text-slate-600 px-1 dark:text-white flex items-center gap-2">
         <List size={24} />
@@ -35,7 +35,7 @@ export function Home() {
         </h2>
 
         <Link to="/create">
-          <button className="cursor-pointer flex items-center bg-slate-700 hover:bg-slate-800 rounded-sm font-semibold text-xs text-white py-3 px-3 transition dark:hover:bg-slate-500  dark:bg-slate-600">
+          <button className="cursor-pointer flex items-center bg-blue-600 hover:bg-blue-700 rounded-sm font-semibold text-xs text-white py-2.5 px-3 transition">
             + Add Personnel
           </button>
         </Link>

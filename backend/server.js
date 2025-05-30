@@ -1,84 +1,76 @@
-const express = require('express');
-const mysql = require('mysql');
-const cors = require('cors');
-const port = 3001;
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const mysql = require("mysql");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser");
+
+const saltRounds = 10;
+const dataB = require("./config/db"); // Make sure this file exists!
 
 const app = express();
+const port = process.env.PORT || 3001;
 
-// Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 app.use(express.json());
+app.use(cookieParser());
 
-// Connect to database
-const dataB = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'reaxsql'
-})
-dataB.connect((err) => {
-    if (err) {
-        console.error("Database connection failed:", err.stack);
-        return;
-    }
-    console.log("Connected to database.");
-});
+// Register user
+app.post("/user_credentials", (req, res) => {
+  const sql =
+    "INSERT INTO user_credentials (`username`, `email`, `password`) VALUES (?)";
+  bcrypt.hash(req.body.password.toString(), saltRounds, (err, hash) => {
+    if (err) return res.json({ Error: "Error for hashing password" });
 
-// Get Data
-app.get('/', (req, res) => {
-    const sql = "SELECT * FROM personnel"
-    dataB.query(sql, (err, result) => {
-        if (err) return res.json({ Message: "Error", error: err });
-        return res.json(result);
-    })
-});
+    const values = [req.body.username, req.body.email, hash];
 
-// Post Data
-app.post('/create', (req, res) => {
-    const sql = "INSERT INTO personnel (`name`, `email`, `address`, `branch`) VALUES (?)";
-    const values = [
-        req.body.name,
-        req.body.branch,
-        req.body.email,
-        req.body.address
-    ]
     dataB.query(sql, [values], (err, result) => {
-        if (err) return res.json(err);
-        return res.json(result);
-    })
-})
-
-// Read Data
-app.get('/read/:id', (req, res) => {
-    const sql = "SELECT * FROM personnel WHERE id = ?";
-    const id = req.params.id;
-    dataB.query(sql, [id], (err, result) => {
-        if (err) return res.json({ Message: "Error inside server" });
-        return res.json(result[0]);
-    })
-})
-
-// Update Data
-app.put('/update/:id', (req, res) => {
-    const sql = "UPDATE personnel SET `name`=?, `email`=?, `address`=?, `branch`=? WHERE id=?";
-    const { name, email, address } = req.body;
-    const id = req.params.id;
-    dataB.query(sql, [name, email, address, id], (err, result) => {
-        if (err) return res.json({ Message: "Error inside server", error: err });
-        return res.json(result);
+      if (err) return res.json({ Message: "Error", error: err });
+      return res.json({ Status: "Success" });
     });
+  });
 });
 
-// Delete Data
-app.delete('/delete/:id', (req, res) => {
-    const sql = "DELETE FROM personnel WHERE id=?";
-    const id = req.params.id;
-    dataB.query(sql, [id], (err, result) => {
-        if (err) return res.json({ Message: "Error inside server", error: err });
-        return res.json(result);
-    });
-})
+// Login user
+app.post("/login", (req, res) => {
+  const sql = "SELECT * FROM user_credentials WHERE email = ?";
+  dataB.query(sql, [req.body.email], (err, data) => {
+    if (err) return res.json({ Error: "Login error in server" });
+    if (data.length > 0) {
+      bcrypt.compare(
+        req.body.password.toString(),
+        data[0].password,
+        (err, response) => {
+          if (err) return res.json({ Error: "Error comparing passwords" });
+          if (response) {
+            const username = data[0].username;
+            const token = jwt.sign({ username }, "jwt-secret-key", {
+              expiresIn: "1d",  // fixed typo
+            });
+            res.cookie("token", token, {
+              httpOnly: true,
+              maxAge: 24 * 60 * 60 * 1000, // 1 day
+            });
+            return res.json({ Status: "Success" });
+          } else {
+            return res.json({ Error: "Incorrect password" });
+          }
+        }
+      );
+    } else {
+      res.json({ Error: "No email found" });
+    }
+  });
+});
 
+// Start server
 app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-})
+  console.log(`Server is running on http://localhost:${port}`);
+});

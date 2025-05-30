@@ -7,6 +7,7 @@ export function Edit() {
   const navigate = useNavigate();
   const [values, setValues] = useState({
     name: "",
+    branch: "",
     email: "",
     address: "",
   });
@@ -18,6 +19,7 @@ export function Edit() {
         console.log("Fetched data:", res.data);
         setValues({
           name: res.data.name || "",
+          branch: res.data.branch || "",
           email: res.data.email || "",
           address: res.data.address || "",
         });
@@ -57,6 +59,19 @@ export function Edit() {
               value={values.name}
               placeholder="Full Name"
               onChange={(e) => setValues({ ...values, name: e.target.value })}
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 mb-1">
+              Branch
+            </label>
+            <input
+              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+              type="text"
+              value={values.branch}
+              placeholder="Branch"
+              onChange={(e) => setValues({ ...values, branch: e.target.value })}
               required
             />
           </div>

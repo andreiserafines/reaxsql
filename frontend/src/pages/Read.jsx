@@ -22,7 +22,6 @@ export function Read() {
         <h2 className="text-center text-2xl">Personnel Details</h2>
 
         <div className="text-normal">
-          <p className="p-2"><strong>ID:</strong> {personnel.id}</p>
           <p className="p-2"><strong>Name:</strong> {personnel.name}</p>
           <p className="p-2"><strong>Email:</strong> {personnel.email}</p>
           <p className="p-2"><strong>Address:</strong> {personnel.address}</p>

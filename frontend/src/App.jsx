@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
 import { BrowserRouter } from 'react-router-dom';
-import { MainContent } from './components/MainContent';
+import { MainContent } from './layout/MainContent';
 
 export default function App() {
   const [isCollapsed, setIsCollapsed] = useState(false);
