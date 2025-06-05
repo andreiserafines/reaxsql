@@ -7,18 +7,16 @@ export default function App() {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
-    <>
-      <ThemeProvider>
-        <div className='bg-slate-50 dark:bg-slate-900'>
-          <BrowserRouter>
-            <div className='text-[13.5px]'>
-              <MainContent isCollapsed={isCollapsed}
-                setIsCollapsed={setIsCollapsed}
-              />
-            </div>
-          </BrowserRouter>
-        </div>
-      </ThemeProvider>
-    </>
+    <ThemeProvider>
+      <div className='bg-gray-100'>
+        <BrowserRouter>
+          <div className='text-[13.5px]'>
+            <MainContent isCollapsed={isCollapsed}
+              setIsCollapsed={setIsCollapsed}
+            />
+          </div>
+        </BrowserRouter>
+      </div>
+    </ThemeProvider>
   );
 }

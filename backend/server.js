@@ -22,6 +22,15 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+// Get data
+app.get("/", (req, res) => {
+  const sql = "SELECT * FROM user_credentials";
+  dataB.query(sql, (err, result) => {
+    if (err) return res.json({ Message: "Error", error: err });
+    return res.json(result);
+  });
+});
+
 // Register user
 app.post("/user_credentials", (req, res) => {
   const sql =
@@ -52,7 +61,7 @@ app.post("/login", (req, res) => {
           if (response) {
             const username = data[0].username;
             const token = jwt.sign({ username }, "jwt-secret-key", {
-              expiresIn: "1d",  // fixed typo
+              expiresIn: "1d", // fixed typo
             });
             res.cookie("token", token, {
               httpOnly: true,

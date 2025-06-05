@@ -1,4 +1,4 @@
-import { Home } from "../pages/Home";
+import { Home } from "../pages/User/Home";
 import { Create } from "../pages/Create";
 import { CreateCredentials } from "../pages/CreateCredentials";
 import { Read } from "../pages/Read";
@@ -8,6 +8,16 @@ import { IdCard, Plus, UserRoundPen, Notebook, LayoutDashboard } from "lucide-re
 import React from "react";
 
 export const AppRoutes = [
+  // === USER- ROUTES === //
+  {
+    path: "/home",
+    element: <Home />,
+    label: "Home",
+    icon: LayoutDashboard,
+    showInSidebar: true,
+  },
+
+
   // Create Credentials
   {
     path: "/createcredentials",
@@ -19,20 +29,11 @@ export const AppRoutes = [
 
   // Login
   {
-    path: "/login",
+    path: "/",
     element: <Login />,
     label: "Login",
     icon: IdCard,
     showInSidebar: false,
-  },
-
-  // Ignore
-  {
-    path: "/list",
-    element: <Home />,
-    label: "Dashboard",
-    icon: LayoutDashboard,
-    showInSidebar: true,
   },
   {
     path: "/create",

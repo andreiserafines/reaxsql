@@ -7,13 +7,10 @@ const DarkModeToggler = () => {
     return (
         <button
             onClick={() => setDarkMode(!darkMode)}
-            className="flex items-center text-xs rounded-full p-1 bg-gray-200 cursor-pointer dark:border-white dark:text-white">
-          { darkMode ? <Sun className="text-yellow-500" /> :<Moon className="text-orange-500" /> }
+            className="flex items-center text-xs rounded-full cursor-pointer dark:border-white dark:text-white absolute m-4 right-0">
+          { darkMode ? <Sun className="text-green-500" /> :<Moon className="text-green-500" /> }
         </button>
     );
 }
-
-{/* <Sun size={20} strokeWidth={1.5} />
-<Moon size={20} strokeWidth={1.5} /> */}
 
 export default DarkModeToggler;
